@@ -7,7 +7,7 @@ public interface BrandService {
 
 	
 	
-	Brand create(Brand brand);
+	Brand create(Brand branddto);
 	
 	Brand findbyid(Integer id);
 	
