@@ -2,6 +2,7 @@ package com.setec.controller;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,19 @@ import lombok.AllArgsConstructor;
 public class BrandController {
 	private BrandService brandService;
 	
-	
-//	@GetMapping({"/"})
+	@GetMapping
+	public ResponseEntity<?> filter(@RequestParam Map<String,String> param){
+
+		List<BrandDTO>  branddto = 
+				brandService.getall(param)
+				.stream().map(brand->BrandMapper.Instance.tobrandDto(brand))
+		.collect(Collectors.toList());
+		
+		return ResponseEntity.ok(branddto);
+		
+		
+	}
+//	@GetMapping
 //	public ResponseEntity<?> getall(){
 //
 //		List<BrandDTO>  branddto = 
@@ -45,18 +57,18 @@ public class BrandController {
 //		
 //		
 //	}
-	@GetMapping
-	public ResponseEntity<?> getbyname(@RequestParam String name){
-
-		List<BrandDTO>  brandtwo = 
-				brandService.getall(name)
-				.stream().map(brand->BrandMapper.Instance.tobrandDto(brand))
-		.collect(Collectors.toList());
-		
-		return ResponseEntity.ok(brandtwo);
-		
-		
-	}
+//	@GetMapping
+//	public ResponseEntity<?> getbyname(@RequestParam String name){
+//
+//		List<BrandDTO>  brandtwo = 
+//				brandService.getall(name)
+//				.stream().map(brand->BrandMapper.Instance.tobrandDto(brand))
+//		.collect(Collectors.toList());
+//		
+//		return ResponseEntity.ok(brandtwo);
+//		
+//		
+//	}
 	@PostMapping({"/home","/"})
 	public ResponseEntity<?> brandService(@RequestBody BrandDTO branddto){
 		
