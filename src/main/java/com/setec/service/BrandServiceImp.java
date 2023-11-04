@@ -2,6 +2,7 @@ package com.setec.service;
 
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import com.setec.dto.BrandDTO;
 import com.setec.enity.Brand;
 import com.setec.exception.BrandNotFoundException;
 import com.setec.mapper.MapperDTO;
+import com.setec.mapperdto.BrandMapper;
 import com.setec.repository.BrandRepository;
 
 import lombok.AllArgsConstructor;
@@ -48,8 +50,9 @@ public class BrandServiceImp implements  BrandService {
 		Brand updatebrand = findbyid(id);
 		updatebrand.setName(branddto.getName());
 		brandRepository.save(updatebrand);
+		return BrandMapper.Instance.tobrandDto(updatebrand);
 		
-		return MapperDTO.ToDTO(updatebrand);
+//		return MapperDTO.ToDTO(updatebrand);
 		
 	}
 
@@ -63,5 +66,19 @@ public class BrandServiceImp implements  BrandService {
 		
 		return brand;
 	}
+
+	@Override
+	public List<Brand> getall() {
+		// TODO Auto-generated method stub
+		return brandRepository.findAll();
+	}
+
+	@Override
+	public List<Brand> getall(String name) {
+		// TODO Auto-generated method stub
+		return brandRepository.findByNameContains(name);
+	}
+
+
 
 }
